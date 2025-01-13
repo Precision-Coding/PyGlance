@@ -16,5 +16,8 @@ def parseSTL(filename):
             # Store the triangle data
             triangles.append((normal, vertex1, vertex2, vertex3))
 
+        print(triangles)
+
         return triangles
 
+parseSTL("STLFiles/TestFile.stl")
