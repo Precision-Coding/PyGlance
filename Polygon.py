@@ -3,10 +3,11 @@ import pygame as pg
 import Display as display
 
 class Polygon:
-    def __init__(self, coordinate1, coordinate2, coordinate3, colour, display):
+    def __init__(self, coordinate1, coordinate2, coordinate3, normal, colour, display):
         self.coord1 = coordinate1
         self.coord2 = coordinate2
         self.coord3 = coordinate3
+        self.normal = normal
         middlecoordinate = (coordinate1+coordinate2+coordinate3)/3
         self.coordmid = middlecoordinate
         self.colour = colour
