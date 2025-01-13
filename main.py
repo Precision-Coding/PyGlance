@@ -21,8 +21,8 @@ while display.run:
     display.clock.tick(display.FPS)
     display.screen.fill("white")
     display.psi = 0.00
-    display.phi = 0.01
-    display.theta = 0.0
+    display.phi = 0.02
+    display.theta = 0.00
 
     #transforms the polygons
     for polygon in polygons:
@@ -32,6 +32,7 @@ while display.run:
     #projects and draws the polygons
     for polygon in polygons:
         polygon.perspective_projection(polygon, display.cameravector, display.camera)
-        polygon.draw(display.screen)
+        pg.draw.polygon(display.screen, polygon.colour, (polygon.projectedcoord1, polygon.projectedcoord2, polygon.projectedcoord3))
+        pg.draw.polygon(display.screen, "black", (polygon.projectedcoord1, polygon.projectedcoord2, polygon.projectedcoord3), 1)
 
     pg.display.flip()

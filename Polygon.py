@@ -38,10 +38,6 @@ class Polygon:
         self.coordmid = middlecoordinate
         return self.coord1, self.coord2, self.coord3
 
-    def draw(self, screen):
-        pg.draw.polygon(screen, self.colour, (self.projectedcoord1, self.projectedcoord2, self.projectedcoord3))
-        pg.draw.polygon(screen, "black", (self.projectedcoord1, self.projectedcoord2, self.projectedcoord3), 2)
-
     def perspective_projection(self, polygon, cameravector, camera):
         polygoncoords = [self.coord1, self.coord2, self.coord3]
         projectioncoords = []
