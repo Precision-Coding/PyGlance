@@ -13,10 +13,6 @@ phi = np.pi/8
 theta = np.pi/8
 FOV = np.pi/3
 
-def orthographic_projection(coordinates):
-    projection = (coordinates[0] + SCREENWIDTH//2, coordinates[1] + SCREENHEIGHT//2)
-    return projection
-
 class Polygon:
     def __init__(self, coordinate1, coordinate2, coordinate3, colour):
         self.coord1 = coordinate1
