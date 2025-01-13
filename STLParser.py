@@ -5,7 +5,7 @@ def parseSTL(filename):
         triangle_count = struct.unpack('<I', f.read(4))[0]  # Number of triangles
         triangles = []
 
-        for _ in range(triangle_count):
+        for _ in range(0, triangle_count):
             # Read each triangle
             normal = struct.unpack('<fff', f.read(12))  # Normal vector
             vertex1 = struct.unpack('<fff', f.read(12))  # Vertex 1
@@ -16,5 +16,8 @@ def parseSTL(filename):
             # Store the triangle data
             triangles.append((normal, vertex1, vertex2, vertex3))
 
+        print(triangles)
+
         return triangles
 
+parseSTL("STLFiles/TestFile.stl")

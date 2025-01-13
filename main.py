@@ -6,11 +6,21 @@ pg.init()
 
 display = Display()
 
-polygon1 = Polygon(np.array([0, 100, 0]), np.array([86, -50, 0]), np.array([-86, -50, 0]), "red", display)
-polygon2 = Polygon(np.array([0, 0, 100]), np.array([86, -50, 0]), np.array([-86, -50, 0]), "green", display)
-polygon3 = Polygon(np.array([0, 100, 0]), np.array([0, 0, 100]), np.array([-86, -50, 0]), "blue", display)
-polygon4 = Polygon(np.array([0, 100, 0]), np.array([86, -50, 0]), np.array([0, 0, 100]), "yellow", display)
-polygons = [polygon1, polygon2, polygon3, polygon4]
+polygon1 = Polygon(coordinate1=np.array((100, 100, -100)), coordinate2=np.array((-100, 100, -100)), coordinate3=np.array((100, -100, -100)), normal=((1, 0, 0)), colour="red", display=display)
+polygon2 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon3 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon4 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon5 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon6 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon7 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon8 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon9 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon10 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon11 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+polygon12 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+
+
+polygons = [polygon1]
 
 while display.run:
     #Event loop
