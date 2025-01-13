@@ -21,13 +21,13 @@ while display.run:
 
     display.clock.tick(display.FPS)
     display.screen.fill("white")
-    psi = 0.01
-    phi = 0.01
-    theta = 1
+    display.psi = 0.00
+    display.phi = 0.01
+    display.theta = 0.0
 
     #transforms the polygons
     for polygon in polygons:
-        polygon.rotate(phi, theta, psi)
+        polygon.rotate(display.phi, display.theta, display.psi)
     #sorts the polygons
     polygons = sorted(polygons, key=lambda polygon: -np.linalg.norm(polygon.coordmid-display.camera))
     #projects and draws the polygons
