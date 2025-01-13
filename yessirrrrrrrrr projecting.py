@@ -25,7 +25,7 @@ class Polygon:
         self.projectedcoord1 = np.array([0, 0])
         self.projectedcoord2 = np.array([0, 0])
         self.projectedcoord3 = np.array([0, 0])
-    
+
     def rotate(self, phi, theta):
         rotationXMatrix = [[1, 0, 0], [0, np.cos(phi), -np.sin(phi)], [0, np.sin(phi), np.cos(phi)]]
         rotationYMatrix = [[np.cos(theta), 0, np.sin(theta)], [0, 1, 0], [-np.sin(theta), 0, np.cos(theta)]]
@@ -53,7 +53,7 @@ class Polygon:
                 verticalangle = np.arccos((np.dot(cameravector, verticalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(verticalvector)))
             else:
                 verticalangle = -np.arccos((np.dot(cameravector, verticalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(verticalvector)))
-            
+
             if coordinates[0] >= 0:
                 horizontalangle = np.arccos((np.dot(cameravector, horizontalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(horizontalvector)))
             else:
@@ -74,15 +74,15 @@ polygons = [polygon1, polygon2, polygon3, polygon4]
 while run:
     #Event loop
     events = pg.event.get()
-    for event in events: 
-        if event.type == pg.QUIT: 
+    for event in events:
+        if event.type == pg.QUIT:
             run = False
 
     clock.tick(FPS)
     screen.fill("white")
     phi = 0.01
     theta = 0.01
-    
+
     for polygon in polygons:
         polygon.rotate(phi, theta)
         polygon.perspective_projection(polygon, cameravector)
