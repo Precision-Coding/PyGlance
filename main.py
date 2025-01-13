@@ -2,25 +2,14 @@ import pygame as pg
 import numpy as np
 from Display import Display
 from Polygon import Polygon
+from Model import Model
 pg.init()
 
 display = Display()
 
-polygon1 = Polygon(coordinate1=np.array((100, 100, -100)), coordinate2=np.array((-100, 100, -100)), coordinate3=np.array((100, -100, -100)), normal=((1, 0, 0)), colour="red", display=display)
-polygon2 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon3 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon4 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon5 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon6 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon7 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon8 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon9 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon10 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon11 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
-polygon12 = Polygon(coordinate1=np.array((0, 0, 0)), coordinate2=np.array((0, 0, 0)), coordinate3=np.array((0, 0, 0)), normal=((1, 0, 0)), colour="red", display=display)
+model = Model(display)
 
-
-polygons = [polygon1]
+polygons = model.PolygonArray
 
 while display.run:
     #Event loop
