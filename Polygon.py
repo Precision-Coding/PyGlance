@@ -41,35 +41,3 @@ class Polygon:
         self.coordmid = middlecoordinate
         return self.coord1, self.coord2, self.coord3
 
-    def draw(self, screen):
-        pg.draw.polygon(screen, self.colour, (self.projectedcoord1, self.projectedcoord2, self.projectedcoord3))
-        pg.draw.polygon(screen, "black", (self.projectedcoord1, self.projectedcoord2, self.projectedcoord3), 5)
-
-    def perspective_projection(self, polygon, cameravector, camera):
-        polygoncoords = [self.coord1, self.coord2, self.coord3]
-        projectioncoords = []
-        for coordinates in polygoncoords:
-            #finds horizontal and vertical components of vector 'camera' -> 'coordinate'
-            verticalcoordinate = np.array([0, coordinates[1], coordinates[2]])
-            verticalvector = verticalcoordinate-camera
-            horizontalcoordinate = np.array([coordinates[0], 0, coordinates[2]])
-            horizontalvector = horizontalcoordinate-camera
-            generalvector = coordinates-camera
-            costhetaleft = np.dot(self.display.cameraleftvector, generalvector)/(np.linalg.norm(self.display.cameraleftvector)*np.linalg.norm(generalvector))
-            costhetaright = np.dot(self.display.camerarightvector, generalvector)/(np.linalg.norm(self.display.camerarightvector)*np.linalg.norm(generalvector))
-            verticalangle = ((np.dot(cameravector, verticalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(verticalvector)))
-            if costhetaright < self.display.costhetamax or costhetaleft < self.display.costhetamax:
-                self.isdrawn = False
-                xcoordinate = (0, 0, 0)
-            else:
-                self.isdrawn = True
-                xcoordinate = np.arccos(costhetaleft)/self.display.FOV*self.display.screen_width
-
-
-       #Translates angle into screen coordinates
-            ycoordinate = np.arccos(verticalangle)/(self.display.FOV/2) * (self.display.screen_height//2) + (self.display.screen_height//2)
-            projectioncoords.append([xcoordinate, ycoordinate])
-
-        self.projectedcoord1 = projectioncoords[0]
-        self.projectedcoord2 = projectioncoords[1]
-        self.projectedcoord3 = projectioncoords[2]

@@ -1,13 +1,15 @@
 import pygame as pg
 import numpy as np
 from Display import Display
+from Camera import Camera
 from Polygon import Polygon
 from Model import Model
+from Render import Render
 import time
 pg.init()
-
+camera = Camera()
 display = Display()
-
+render = Render()
 model = Model(display)
 
 polygons = model.PolygonArray
@@ -27,15 +29,15 @@ while display.run:
     #transforms the polygons
     for polygon in polygons:
         polygon.rotate(display.phi, display.theta, display.psi)
-        polygon.costheta = (np.dot(display.cameravector, polygon.normal)/np.linalg.norm(polygon.normal)/np.linalg.norm(display.cameravector))
+        polygon.costheta = (np.dot(camera.direction_vector, polygon.normal)/np.linalg.norm(polygon.normal)/np.linalg.norm(camera.direction_vector))
 
     #sorts the polygons
-    polygons = sorted(polygons, key=lambda polygon: -np.linalg.norm(polygon.coordmid-display.camera))
+    polygons = sorted(polygons, key=lambda polygon: -np.linalg.norm(polygon.coordmid-camera.position_vector))
     #projects and draws the polygons
     for polygon in polygons:
         if polygon.costheta > 0:
-            polygon.perspective_projection(polygon, display.cameravector, display.camera)
+
             polygon.colour = (polygon.costheta*225, polygon.costheta*225, polygon.costheta*225)
-            pg.draw.polygon(display.screen, polygon.colour, (polygon.projectedcoord1, polygon.projectedcoord2, polygon.projectedcoord3))
+            pg.draw.polygon(display.screen, polygon.colour, render.polygonPerspectiveProjection(polygon, camera, display))
 
     pg.display.flip()
