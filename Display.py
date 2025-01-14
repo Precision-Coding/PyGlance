@@ -8,7 +8,7 @@ class Display():
         self.screen_width = 800
         self.screen = pg.display.set_mode([self.screen_height, self.screen_width])
         self.clock = pg.time.Clock()
-        self.FPS = 60
-        self.phi = np.pi/8
-        self.theta = np.pi/8
-        self.psi = np.pi/8
+        self.fps = 60
+        self.pitch = 0
+        self.yaw = np.pi/8
+        self.roll = 0

@@ -10,9 +10,9 @@ pg.init()
 camera = Camera()
 display = Display()
 render = Render()
-model = Model(display)
+model = Model()
 
-polygons = model.PolygonArray
+polygons = model.polygon_array
 
 while display.run:
     #Event loop
@@ -21,23 +21,19 @@ while display.run:
         if event.type == pg.QUIT:
             display.run = False
 
-    display.clock.tick(display.FPS)
+    display.clock.tick(display.fps)
     display.screen.fill("white")
-    display.psi = 0.00
-    display.phi = 0.00
-    display.theta = 0.05
     #transforms the polygons
     for polygon in polygons:
-        polygon.rotate(display.phi, display.theta, display.psi)
-        polygon.costheta = (np.dot(camera.direction_vector, polygon.normal)/np.linalg.norm(polygon.normal)/np.linalg.norm(camera.direction_vector))
+        polygon.rotate(display.pitch, display.yaw, display.roll)
+        polygon.cos_theta = (np.dot(camera.direction_vector, polygon.normal)/np.linalg.norm(polygon.normal)/np.linalg.norm(camera.direction_vector))
 
     #sorts the polygons
-    polygons = sorted(polygons, key=lambda polygon: -np.linalg.norm(polygon.coordmid-camera.position_vector))
+    polygons = sorted(polygons, key=lambda polygon: -np.linalg.norm(polygon.middle_coordinate-camera.position_vector))
     #projects and draws the polygons
     for polygon in polygons:
-        if polygon.costheta > 0:
-
-            polygon.colour = (polygon.costheta*225, polygon.costheta*225, polygon.costheta*225)
+        if polygon.cos_theta > 0:
+            polygon.colour = (polygon.cos_theta*225, polygon.cos_theta*225, polygon.cos_theta*225)
             pg.draw.polygon(display.screen, polygon.colour, render.polygonPerspectiveProjection(polygon, camera, display))
 
     pg.display.flip()

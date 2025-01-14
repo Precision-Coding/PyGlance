@@ -1,4 +1,4 @@
-def parseSTL(filename):
+def parseStl(filename):
     import struct
     import os
 
@@ -71,5 +71,3 @@ def parseSTL(filename):
         except Exception as e:
             print(f"Error parsing ASCII STL file: {e}")
             raise
-
-parseSTL("STLFiles/Cube.stl")
