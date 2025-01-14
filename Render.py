@@ -28,3 +28,18 @@ class Render():
             projection_coords.append([x_coordinate, y_coordinate])
 
         return (projection_coords[0], projection_coords[1], projection_coords[2])
+
+    def draw(self, polygons, display, camera,):
+        #transforms the polygons
+        for polygon in polygons:
+            polygon.rotate(display.pitch, display.yaw, display.roll)
+            polygon.cos_theta = (np.dot(camera.direction_vector, polygon.normal)/np.linalg.norm(polygon.normal)/np.linalg.norm(camera.direction_vector))
+
+        #sorts the polygons
+        polygons = sorted(polygons, key=lambda polygon: -np.linalg.norm(polygon.middle_coordinate-camera.position_vector))
+
+        #projects and draws the polygons
+        for polygon in polygons:
+            if polygon.cos_theta > 0:
+                polygon.colour = (polygon.cos_theta*225, polygon.cos_theta*225, polygon.cos_theta*225)
+                pg.draw.polygon(display.screen, polygon.colour, self.polygonPerspectiveProjection(polygon, camera, display))
