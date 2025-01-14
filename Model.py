@@ -8,9 +8,10 @@ class Model():
         self.PolygonArray = self.polygonConverter()
 
     def polygonConverter(self):
+        translation = np.array((100, 0, 0))
         data = self.rawArray
         polygons = []
         for touple in data:
-            polygon = Polygon(normal=np.array(touple[0]), coordinate1=np.array(touple[1])+np.array((0,50,0)), coordinate2=np.array(touple[2])+np.array((0,50,0)) , coordinate3=np.array(touple[3])+np.array((0,50,0)), colour="grey", display=self.display)
+            polygon = Polygon(normal=np.array(touple[0]), coordinate1=np.array(touple[1])+translation, coordinate2=np.array(touple[2])+translation , coordinate3=np.array(touple[3])+translation, colour="grey", display=self.display)
             polygons.append(polygon)
         return polygons

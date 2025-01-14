@@ -14,4 +14,8 @@ class Display():
         self.phi = np.pi/8
         self.theta = np.pi/8
         self.psi = np.pi/8
-        self.FOV = np.pi/4
+        self.FOV = np.pi/2
+        self.cameraleftvector = np.array(np.matmul(self.cameravector, np.matrix(([np.cos(self.FOV/2), 0, np.sin(self.FOV/2)],[0, 1, 0],[-np.sin(self.FOV/2), 0, np.cos(self.FOV/2)]))))[0]
+        self.camerarightvector = np.array(np.matmul(self.cameravector, np.matrix(([np.cos(-self.FOV/2), 0, np.sin(-self.FOV/2)],[0, 1, 0],[-np.sin(-self.FOV/2), 0, np.cos(-self.FOV/2)]))))[0]
+        self.costhetamax = np.dot(self.cameraleftvector, self.camerarightvector)
+        print(self.cameraleftvector)

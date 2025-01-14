@@ -1,13 +1,13 @@
 import numpy as np
 import pygame as pg
-import Display as display
+from Display import Display
 
 class Polygon:
     def __init__(self, coordinate1, coordinate2, coordinate3, normal, colour, display):
         self.coord1 = coordinate1
         self.coord2 = coordinate2
         self.coord3 = coordinate3
-        self.normal = normal
+        self.normal = -normal
         middlecoordinate = (coordinate1+coordinate2+coordinate3)/3
         self.coordmid = middlecoordinate
         self.colour = colour
@@ -17,6 +17,7 @@ class Polygon:
         self.projectedcoord3 = np.array([0, 0])
         self.display = display
         self.isdrawn = True
+        self.costheta = 1
 
     def rotate(self, phi, theta, psi):
 
@@ -53,21 +54,20 @@ class Polygon:
             verticalvector = verticalcoordinate-camera
             horizontalcoordinate = np.array([coordinates[0], 0, coordinates[2]])
             horizontalvector = horizontalcoordinate-camera
-
-            #Manually assigns +/- signs to calulated angle between the 2 vectors
-            if coordinates[1] >= 0:
-                verticalangle = np.arccos((np.dot(cameravector, verticalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(verticalvector)))
+            generalvector = coordinates-camera
+            costhetaleft = np.dot(self.display.cameraleftvector, generalvector)/(np.linalg.norm(self.display.cameraleftvector)*np.linalg.norm(generalvector))
+            costhetaright = np.dot(self.display.camerarightvector, generalvector)/(np.linalg.norm(self.display.camerarightvector)*np.linalg.norm(generalvector))
+            verticalangle = ((np.dot(cameravector, verticalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(verticalvector)))
+            if costhetaright < self.display.costhetamax or costhetaleft < self.display.costhetamax:
+                self.isdrawn = False
+                xcoordinate = (0, 0, 0)
             else:
-                verticalangle = -np.arccos((np.dot(cameravector, verticalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(verticalvector)))
+                self.isdrawn = True
+                xcoordinate = np.arccos(costhetaleft)/self.display.FOV*self.display.screen_width
 
-            if coordinates[0] >= 0:
-                horizontalangle = np.arccos((np.dot(cameravector, horizontalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(horizontalvector)))
-            else:
-                horizontalangle = -np.arccos((np.dot(cameravector, horizontalvector))/(np.linalg.norm(cameravector)*np.linalg.norm(horizontalvector)))
 
-            #Translates angle into screen coordinates
-            xcoordinate = horizontalangle/(self.display.FOV/2) * (self.display.screen_height//2) + (self.display.screen_height//2)
-            ycoordinate = verticalangle/(self.display.FOV/2) * (self.display.screen_height//2) + (self.display.screen_height//2)
+       #Translates angle into screen coordinates
+            ycoordinate = np.arccos(verticalangle)/(self.display.FOV/2) * (self.display.screen_height//2) + (self.display.screen_height//2)
             projectioncoords.append([xcoordinate, ycoordinate])
 
         self.projectedcoord1 = projectioncoords[0]
