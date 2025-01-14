@@ -16,6 +16,7 @@ class Polygon:
         self.projectedcoord2 = np.array([0, 0])
         self.projectedcoord3 = np.array([0, 0])
         self.display = display
+        self.isdrawn = True
 
     def rotate(self, phi, theta, psi):
 
@@ -34,9 +35,14 @@ class Polygon:
         self.coord1 = np.matmul(rotationZMatrix, np.matmul(rotationXMatrix, np.matmul(rotationYMatrix, self.coord1)))
         self.coord2 = np.matmul(rotationZMatrix, np.matmul(rotationXMatrix, np.matmul(rotationYMatrix, self.coord2)))
         self.coord3 = np.matmul(rotationZMatrix, np.matmul(rotationXMatrix, np.matmul(rotationYMatrix, self.coord3)))
+        self.normal = np.matmul(rotationZMatrix, np.matmul(rotationXMatrix, np.matmul(rotationYMatrix, self.normal)))
         middlecoordinate = (self.coord1+self.coord2+self.coord3)/3
         self.coordmid = middlecoordinate
         return self.coord1, self.coord2, self.coord3
+
+    def draw(self, screen):
+        pg.draw.polygon(screen, self.colour, (self.projectedcoord1, self.projectedcoord2, self.projectedcoord3))
+        pg.draw.polygon(screen, "black", (self.projectedcoord1, self.projectedcoord2, self.projectedcoord3), 5)
 
     def perspective_projection(self, polygon, cameravector, camera):
         polygoncoords = [self.coord1, self.coord2, self.coord3]
