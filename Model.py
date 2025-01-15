@@ -4,7 +4,7 @@ import numpy as np
 
 class Model():
     def __init__(self):
-        self.raw_array = parseStl("STLFiles/TestFile.stl")
+        self.raw_array = parseStl("STLFiles/CatLowPoly.stl")
         self.polygon_array = self.polygonConverter()
         self.pitch = 0
         self.yaw = 0
