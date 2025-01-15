@@ -11,22 +11,19 @@ camera = Camera()
 display = Display()
 render = Render()
 model = Model()
-fpslist = []
+frameCount = 0
+
+start = time.time()
 while display.run:
+    frameCount += 1
     #Event loop
     events = pg.event.get()
     for event in events:
         if event.type == pg.QUIT:
             display.run = False
-    start = time.time()
-    display.clock.tick(display.fps)
     display.screen.fill("white")
     render.pygameDrawModel(display, camera, model)
-    end = time.time()
-    framespersecond = 1/(end-start)
-    fpslist.append(framespersecond)
-    sum = 0
-    for i in fpslist:
-        sum += i
-    print(sum/len(fpslist))
+
+    print(round(frameCount/(time.time() - start), 1))
     pg.display.flip()
+    display.clock.tick(display.fps)
