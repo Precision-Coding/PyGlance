@@ -39,7 +39,7 @@ class Render():
         polygons = sorted(model.polygon_array, key=lambda polygon: -np.linalg.norm(polygon.middle_coordinate-camera.position_vector))
 
         #projects and draws the polygons
-        for polygon in model.polygon_array:
+        for polygon in polygons:
             if polygon.cos_theta > 0:
                 polygon.colour = (polygon.cos_theta*225, polygon.cos_theta*225, polygon.cos_theta*225)
                 pg.draw.polygon(display.screen, polygon.colour, self.polygonPerspectiveProjection(polygon, camera, display))
