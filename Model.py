@@ -7,14 +7,14 @@ class Model():
         self.raw_array = parseStl("STLFiles/TestFile.stl")
         self.polygon_array = self.polygonConverter()
         self.pitch = 0
-        self.yaw = np.pi/8
-        self.roll = 0
+        self.yaw = 0
+        self.roll = np.pi/8
 
     def polygonConverter(self):
-        translation = np.array((100, 0, 0))
+        translation = np.array((0, 50, -75))
         data = self.raw_array
         polygons = []
         for tuple in data:
-            polygon = Polygon(normal=np.array(tuple[0]), vertices_coordinates=np.array(tuple[1:]), colour="grey")
+            polygon = Polygon(normal=np.array(tuple[0]), vertices_coordinates=np.array(tuple[1:])+translation, colour="grey")
             polygons.append(polygon)
         return polygons
