@@ -21,6 +21,6 @@ while display.run:
 
     display.clock.tick(display.fps)
     display.screen.fill("white")
-    render.draw(model.polygon_array, display, camera)
+    render.pygameDrawModel(display, camera, model)
 
     pg.display.flip()

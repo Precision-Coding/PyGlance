@@ -9,6 +9,3 @@ class Display():
         self.screen = pg.display.set_mode([self.screen_height, self.screen_width])
         self.clock = pg.time.Clock()
         self.fps = 60
-        self.pitch = 0
-        self.yaw = np.pi/8
-        self.roll = 0

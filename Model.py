@@ -6,6 +6,9 @@ class Model():
     def __init__(self):
         self.raw_array = parseStl("STLFiles/TestFile.stl")
         self.polygon_array = self.polygonConverter()
+        self.pitch = 0
+        self.yaw = np.pi/8
+        self.roll = 0
 
     def polygonConverter(self):
         translation = np.array((100, 0, 0))
