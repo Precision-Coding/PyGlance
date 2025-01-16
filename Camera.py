@@ -3,7 +3,7 @@ import pygame as py
 
 class Camera():
     def __init__(self):
-        self.position_vector = np.array([0., -250., 0.])
+        self.position_vector = np.array([0., -175., 0.])
         self.direction_vector = np.array([0., 1., 0.])
         self.direction_vector_right = np.array([1., 0., 0.])
         self.direction_vector_up = np.array([0., 0., -1.])

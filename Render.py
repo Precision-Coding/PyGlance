@@ -31,7 +31,7 @@ class Render():
         #transforms the polygons
         for polygon in model.polygon_array:
             polygon.rotate(model.pitch, model.yaw, model.roll)
-            polygon.cos_theta = np.dot(camera.direction_vector, polygon.normal)
+            polygon.cos_theta = np.dot(polygon.middle_coordinate-camera.position_vector, polygon.normal)/np.linalg.norm(polygon.middle_coordinate-camera.position_vector)
 
         #sorts the polygons
         polygons = sorted(model.polygon_array, key=lambda polygon: -np.linalg.norm(polygon.middle_coordinate-camera.position_vector))
