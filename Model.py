@@ -5,6 +5,7 @@ import numpy as np
 class Model():
     def __init__(self):
         self.raw_array = parseStl("STLFiles/CatLowPoly.stl")
+        self.colour = np.array((200, 0, 200))
         self.polygon_array = self.polygonConverter()
         self.pitch = 0
         self.yaw = 0.05
@@ -15,6 +16,6 @@ class Model():
         data = self.raw_array
         polygons = []
         for tuple in data:
-            polygon = Polygon(normal=np.array(tuple[0]), vertices_coordinates=np.array(tuple[1:])+translation, colour="green")
+            polygon = Polygon(normal=np.array(tuple[0]), vertices_coordinates=np.array(tuple[1:])+translation)
             polygons.append(polygon)
         return polygons

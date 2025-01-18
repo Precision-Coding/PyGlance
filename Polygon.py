@@ -2,11 +2,11 @@ import numpy as np
 import pygame as pg
 from Display import Display
 class Polygon:
-    def __init__(self, vertices_coordinates, normal, colour):
+    def __init__(self, vertices_coordinates, normal):
         self.vertices_coordinates = vertices_coordinates
         self.normal = normal
         self.middle_coordinate = (vertices_coordinates[0] + vertices_coordinates[1] + vertices_coordinates[2])/3
-        self.colour = colour
+        self.colour = ()
         #placeholders for when they are assigned later lol
         self.is_drawn = True
         self.cos_theta = 1

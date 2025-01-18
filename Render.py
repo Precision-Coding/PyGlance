@@ -16,12 +16,12 @@ class Render():
 
         return (projection_coords[0], projection_coords[1], projection_coords[2])
 
-    def polygonShadingAndCulling(self, polygon, camera):
+    def polygonShadingAndCulling(self, polygon, camera, model):
         transformed_midpoint = polygon.middle_coordinate-camera.position_vector
         cos_theta = np.dot(transformed_midpoint, polygon.normal)/np.linalg.norm(transformed_midpoint) #cos theta = (a.b)/|a||b|
 
         if cos_theta < 0:
-            polygon.colour = (200* -cos_theta, 200* -cos_theta, 200* -cos_theta)
+            polygon.colour = (model.colour[0] * -cos_theta, model.colour[1] * -cos_theta, model.colour[2] * -cos_theta)
             polygon.is_drawn = True
         else:
             polygon.is_drawn = False
@@ -30,7 +30,7 @@ class Render():
         #transforms the polygons shades and culls backfacing
         for polygon in model.polygon_array:
             polygon.rotate(model.pitch, model.yaw, model.roll)
-            self.polygonShadingAndCulling(polygon, camera)
+            self.polygonShadingAndCulling(polygon, camera, model)
 
         #sorts the polygons
         polygons = sorted(model.polygon_array, key=lambda polygon: np.linalg.norm(polygon.middle_coordinate-camera.position_vector), reverse=True)
