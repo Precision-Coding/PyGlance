@@ -9,9 +9,10 @@ class Render():
 
         for coordinates in polygon.vertices_coordinates:
             #finds horizontal and vertical components of vector 'camera' -> 'coordinate'
-            transformed_coordinates = coordinates - camera.position_vector
-            x_coordinate = transformed_coordinates[0]/-transformed_coordinates[2] * 700 + display.screen_width/2
-            y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 700 + display.screen_height/2
+            translated_coordinates = coordinates - camera.position_vector
+            transformed_coordinates = np.matmul(translated_coordinates, camera.rotation_matrix)
+            x_coordinate = transformed_coordinates[0]/-transformed_coordinates[2] * 100 + display.screen_width/2
+            y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 100 + display.screen_height/2
             projection_coords.append([x_coordinate, y_coordinate])
 
         return (projection_coords[0], projection_coords[1], projection_coords[2])

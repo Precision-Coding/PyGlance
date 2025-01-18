@@ -23,6 +23,8 @@ while display.run:
             display.run = False
     display.screen.fill("white")
     render.pygameDrawModel(display, camera, model)
+    camera.pitch += 0.0
+    camera.rotate()
 
     print(round(frameCount/(time.time() - start), 1))
     pg.display.flip()
