@@ -4,7 +4,7 @@ from Display import Display
 class Polygon:
     def __init__(self, vertices_coordinates, normal, colour):
         self.vertices_coordinates = vertices_coordinates
-        self.normal = -normal
+        self.normal = normal
         self.middle_coordinate = (vertices_coordinates[0] + vertices_coordinates[1] + vertices_coordinates[2])/3
         self.colour = colour
         #placeholders for when they are assigned later lol

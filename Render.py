@@ -9,21 +9,19 @@ class Render():
 
         for coordinates in polygon.vertices_coordinates:
             #finds horizontal and vertical components of vector 'camera' -> 'coordinate'
-            coordinate_position_vector = coordinates
-            coordinate_direction_vector = coordinates-camera.position_vector
-            #project coordinate onto the clipping plane
-            t = -(np.dot(camera.direction_vector, coordinate_position_vector)-camera.k)/np.dot(camera.direction_vector, coordinate_direction_vector)
-            clipping_plane_coordinate = coordinate_position_vector + t*coordinate_direction_vector
-            polygon.is_drawn = True
-            #Set coordinates based on distance from bottom and left
-            horizontal_plane_coordinate_distance = np.linalg.norm(np.cross(camera.direction_vector_up, clipping_plane_coordinate-camera.left_bounding_coordinate))
-            vertical_plane_coordinate_distance = np.linalg.norm(np.cross(camera.direction_vector_right, clipping_plane_coordinate-camera.bottom_bounding_coordinate))
-            clipping_plane_height = np.linalg.norm(np.cross(camera.direction_vector_right, camera.top_bounding_coordinate-camera.bottom_bounding_coordinate))
-            clipping_plane_width = np.linalg.norm(np.cross(camera.direction_vector_up, camera.right_bounding_coordinate-camera.left_bounding_coordinate))
-            x_coordinate = horizontal_plane_coordinate_distance / clipping_plane_width * display.screen_width
-            y_coordinate = vertical_plane_coordinate_distance / clipping_plane_height * display.screen_height
-           #Translates angle into screen coordinates
+            transformed_coordinates = coordinates - camera.position_vector
+            x_coordinate = transformed_coordinates[0]/-transformed_coordinates[2] * 700 + display.screen_width/2
+            y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 700 + display.screen_height/2
             projection_coords.append([x_coordinate, y_coordinate])
+
+        transformed_midpoint = polygon.middle_coordinate-camera.position_vector
+        cos_theta = np.dot(transformed_midpoint, polygon.normal)/np.linalg.norm(transformed_midpoint) #cos theta = (a.b)/|a||b|
+        if cos_theta < 0:
+            polygon.colour = (abs(200*cos_theta), abs(200*cos_theta), abs(200*cos_theta))
+            polygon.is_drawn = True
+        else:
+            polygon.colour = "red"
+            polygon.is_drawn = False
 
         return (projection_coords[0], projection_coords[1], projection_coords[2])
 
@@ -31,13 +29,12 @@ class Render():
         #transforms the polygons
         for polygon in model.polygon_array:
             polygon.rotate(model.pitch, model.yaw, model.roll)
-            polygon.cos_theta = np.dot(polygon.middle_coordinate-camera.position_vector, polygon.normal)/np.linalg.norm(polygon.middle_coordinate-camera.position_vector)
 
         #sorts the polygons
         polygons = sorted(model.polygon_array, key=lambda polygon: -np.linalg.norm(polygon.middle_coordinate-camera.position_vector))
 
         #projects and draws the polygons
         for polygon in polygons:
-            if polygon.cos_theta > 0:
-                polygon.colour = (abs(polygon.cos_theta*225), abs(polygon.cos_theta*225), abs(polygon.cos_theta*225))
-                pg.draw.polygon(display.screen, polygon.colour, self.polygonPerspectiveProjection(polygon, camera, display))
+            polygon_position = self.polygonPerspectiveProjection(polygon, camera, display)
+            if polygon.is_drawn:
+                pg.draw.polygon(display.screen, polygon.colour, polygon_position)
