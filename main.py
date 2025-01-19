@@ -41,9 +41,9 @@ while display.run:
     if key_press[pg.K_RIGHT]:
         camera.yaw += 0.1 * camera_turn_multiplier
     if key_press[pg.K_UP]:
-        camera.pitch += 0.1 * camera_turn_multiplier
+        camera.pitch = min(max(camera.pitch + 0.1 * camera_turn_multiplier, -np.pi/2), np.pi/2)
     if key_press[pg.K_DOWN]:
-        camera.pitch -= 0.1 * camera_turn_multiplier
+        camera.pitch = min(max(camera.pitch - 0.1 * camera_turn_multiplier, -np.pi/2), np.pi/2)
     display.screen.fill("white")
     render.pygameDrawModel(display, camera, model)
     camera.pitch += 0.0
