@@ -6,10 +6,6 @@ if __name__ == "__main__":
     print("Checking and installing Python dependencies...")
     check_and_install_dependencies()
 
-    # Then handle PyPy installation
-    print("\nSetting up PyPy...")
-    setup_pypy()
-
     print("\nAll setup steps completed successfully!")
 
 
