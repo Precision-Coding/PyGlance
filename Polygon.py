@@ -23,5 +23,4 @@ class Polygon:
 
         for i in range(0,3):
             self.vertices_coordinates[i] = np.matmul(rotation_matrix, self.vertices_coordinates[i])
-        self.normal = np.matmul(rotation_matrix, self.normal)
-        self.middle_coordinate = np.matmul(rotation_matrix, self.middle_coordinate)
+

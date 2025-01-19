@@ -8,7 +8,7 @@ class Model():
         self.colour = np.array((250, 250, 0))
         self.polygon_array = self.polygonConverter()
         self.pitch = 0.0
-        self.yaw = 0.1
+        self.yaw = 0.0
         self.roll = 0.0
 
     def polygonConverter(self):
