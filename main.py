@@ -49,6 +49,7 @@ while display.run:
     camera.pitch += 0.0
     camera.rotate()
 
-    print(round(frameCount/(time.time() - start), 1))
+    if frameCount % 30 == 0:
+        print(round(frameCount/(time.time() - start), 1))
     pg.display.flip()
     display.clock.tick(display.fps)
