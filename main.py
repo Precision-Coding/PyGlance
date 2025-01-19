@@ -1,3 +1,13 @@
+# main.py
+from DependencyInstaller import check_and_install_dependencies
+
+if __name__ == "__main__":
+    print("Running main.py...")
+    check_and_install_dependencies()  # Ensure dependencies are installed
+    print("All dependencies are ready!")
+    # Your main application code here
+
+
 import pygame as pg
 import numpy as np
 from Display import Display
