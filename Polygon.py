@@ -1,4 +1,6 @@
 import numpy as np
+from numpy import cos as c
+from numpy import sin as s
 import pygame as pg
 from Display import Display
 class Polygon:
@@ -11,22 +13,15 @@ class Polygon:
         self.is_drawn = True
         self.cos_theta = 1
 
-    def rotate(self, pitch, yaw, roll):
+    def rotate(self, x, y, z):
+        #x = pitch, y = yaw, z = roll
+        rotation_matrix = np.array([
+            np.array([c(y)*c(z), -c(y)*s(z), s(y)]),
+            np.array([c(x)*s(z)+s(x)*s(y)*c(z), c(x)*c(z)-s(x)*s(y)*s(z), -s(x)*c(y)]),
+            np.array([s(x)*s(z)-c(x)*s(y)*c(z), s(x)*c(z)+c(x)*s(y)*s(z), c(x)*c(y)])
+        ])
 
-        rotation_x_matrix = [[1, 0, 0],
-                           [0, np.cos(pitch), -np.sin(pitch)],
-                           [0, np.sin(pitch), np.cos(pitch)]]
-
-        rotation_y_matrix = [[np.cos(yaw), 0, np.sin(yaw)],
-                           [0, 1, 0],
-                           [-np.sin(yaw), 0, np.cos(yaw)]]
-
-        rotation_z_matrix = [[np.cos(roll), -np.sin(roll), 0],
-                           [np.sin(roll), np.cos(roll), 0],
-                           [0, 0, 1]]
-
-        self.vertices_coordinates[0] = np.matmul(rotation_z_matrix, np.matmul(rotation_x_matrix, np.matmul(rotation_y_matrix, self.vertices_coordinates[0])))
-        self.vertices_coordinates[1] = np.matmul(rotation_z_matrix, np.matmul(rotation_x_matrix, np.matmul(rotation_y_matrix, self.vertices_coordinates[1])))
-        self.vertices_coordinates[2] = np.matmul(rotation_z_matrix, np.matmul(rotation_x_matrix, np.matmul(rotation_y_matrix, self.vertices_coordinates[2])))
-        self.normal = np.matmul(rotation_z_matrix, np.matmul(rotation_x_matrix, np.matmul(rotation_y_matrix, self.normal)))
-        self.middle_coordinate = (self.vertices_coordinates[0] + self.vertices_coordinates[1] + self.vertices_coordinates[2])/3
+        for i in range(0,3):
+            self.vertices_coordinates[i] = np.matmul(rotation_matrix, self.vertices_coordinates[i])
+        self.normal = np.matmul(rotation_matrix, self.normal)
+        self.middle_coordinate = np.matmul(rotation_matrix, self.middle_coordinate)
