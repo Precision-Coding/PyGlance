@@ -1,11 +1,16 @@
 # main.py
-from DependencyInstaller import check_and_install_dependencies
+from DependencyInstaller import *
 
 if __name__ == "__main__":
-    print("Running main.py...")
-    check_and_install_dependencies()  # Ensure dependencies are installed
-    print("All dependencies are ready!")
-    # Your main application code here
+    # Ensure dependencies are checked first
+    print("Checking and installing Python dependencies...")
+    check_and_install_dependencies()
+
+    # Then handle PyPy installation
+    print("\nSetting up PyPy...")
+    setup_pypy()
+
+    print("\nAll setup steps completed successfully!")
 
 
 import pygame as pg
@@ -59,7 +64,7 @@ while display.run:
     camera.pitch += 0.0
     camera.rotate()
 
-    if frameCount % 30 == 0:
+    if frameCount % 60 == 0:
         print(round(frameCount/(time.time() - start), 1))
     pg.display.flip()
     display.clock.tick(display.fps)
