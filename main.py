@@ -15,13 +15,11 @@ from Display import Display
 from Camera import Camera
 from Polygon import Polygon
 from Model import Model
-from Render import Render
 import time
 pg.init()
 camera = Camera()
 display = Display()
-render = Render()
-model = Model()
+model = Model("STLFiles/CatLowPoly.stl", (0, 0, 50))
 frameCount = 0
 
 start = time.time()
@@ -56,7 +54,10 @@ while display.run:
     if key_press[pg.K_DOWN]:
         camera.pitch = min(max(camera.pitch - 0.1 * camera_turn_multiplier, -np.pi/2), np.pi/2)
     display.screen.fill("white")
-    render.pygameDrawModel(display, camera, model)
+    model.render(camera, display)
+    for polygon in model.polygon_array:
+        if polygon.is_drawn:
+            pg.draw.polygon(display.screen, polygon.colour, polygon.vertices_projection_coords)
     camera.pitch += 0.0
     camera.rotate()
 

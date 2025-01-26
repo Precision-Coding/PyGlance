@@ -19,6 +19,7 @@ class Camera():
         self.up = np.array((0., 1., 0.))
         self.right = np.array((1., 0., 0.))
         self.forward = np.array((0., 0., -1.))
+
     def rotate(self):
         self.rotation_matrix =np.array([
             np.array([np.cos(-self.yaw), np.sin(-self.yaw) * np.sin(-self.pitch), np.sin(-self.yaw) * np.cos(-self.pitch)]),

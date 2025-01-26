@@ -1,6 +1,6 @@
 import numpy as np
-from numpy import cos as c
-from numpy import sin as s
+from numpy import cos
+from numpy import sin
 import pygame as pg
 from Display import Display
 class Polygon:
@@ -8,19 +8,36 @@ class Polygon:
         self.vertices_coordinates = vertices_coordinates
         self.normal = normal
         self.middle_coordinate = (vertices_coordinates[0] + vertices_coordinates[1] + vertices_coordinates[2])/3
-        self.colour = ()
-        #placeholders for when they are assigned later lol
+        self.colour = np.array(())
         self.is_drawn = True
         self.cos_theta = 1
+        self.vertices_projection_coords = np.array((np.array((0, 0)), np.array((0, 0)), np.array((0, 0))))
 
-    def rotate(self, x, y, z):
-        #x = pitch, y = yaw, z = roll
+    def rotate(self, pitch, yaw, roll):
         rotation_matrix = np.array([
-            np.array([c(y)*c(z), -c(y)*s(z), s(y)]),
-            np.array([c(x)*s(z)+s(x)*s(y)*c(z), c(x)*c(z)-s(x)*s(y)*s(z), -s(x)*c(y)]),
-            np.array([s(x)*s(z)-c(x)*s(y)*c(z), s(x)*c(z)+c(x)*s(y)*s(z), c(x)*c(y)])
+            np.array([cos(yaw)*cos(roll), -cos(yaw)*sin(roll), sin(yaw)]),
+            np.array([cos(pitch)*sin(roll)+sin(pitch)*sin(yaw)*cos(roll), cos(pitch)*cos(roll)-sin(pitch)*sin(yaw)*sin(roll), -sin(pitch)*cos(yaw)]),
+            np.array([sin(pitch)*sin(roll)-cos(pitch)*sin(yaw)*cos(roll), sin(pitch)*cos(roll)+cos(pitch)*sin(yaw)*sin(roll), cos(pitch)*cos(yaw)])
         ])
 
         for i in range(0,3):
             self.vertices_coordinates[i] = np.matmul(rotation_matrix, self.vertices_coordinates[i])
 
+    def project(self, camera, display):
+        for arrayIndex, coordinates in enumerate(self.vertices_coordinates):
+            #finds horizontal and vertical components of vector 'camera' -> 'coordinate'
+            translated_coordinates = coordinates - camera.position_vector
+            transformed_coordinates = np.matmul(translated_coordinates, camera.rotation_matrix)
+            x_coordinate = transformed_coordinates[0]/-transformed_coordinates[2] * 300 + display.screen_width/2
+            y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 300 + display.screen_height/2
+            self.vertices_projection_coords[arrayIndex] = np.array((x_coordinate, y_coordinate))
+
+    def shade(self, camera, colour):
+        transformed_midpoint = self.middle_coordinate-camera.position_vector
+        cos_theta = np.dot(transformed_midpoint, self.normal)/np.linalg.norm(transformed_midpoint) #cos theta = (a.b)/|a||b|
+
+        if cos_theta < 0:
+            self.colour = (colour[0] * -cos_theta, colour[1] * -cos_theta, colour[2] * -cos_theta)
+            self.is_drawn = True
+        else:
+            self.is_drawn = False
