@@ -45,7 +45,7 @@ class Polygon:
         #Culls drawing polygons if offscreen
     def cull(self, display):
         off_screen_vertecies_count = 0
-        for arrayIndex, coordinates in enumerate(self.vertices_projection_coords):
+        for coordinates in enumerate(self.vertices_projection_coords):
             if coordinates[0] > display.screen_width | coordinates[1] > display.screen_height:
                 off_screen_vertecies_count += 1
 
