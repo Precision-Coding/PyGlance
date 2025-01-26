@@ -42,10 +42,10 @@ class Polygon:
             y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 300 + display.screen_height/2
             self.vertices_projection_coords[arrayIndex] = np.array((x_coordinate, y_coordinate))
 
-        #Culls drawing polygons if offscreen
+    #Culls drawing polygons if offscreen
     def cull(self, display):
         off_screen_vertecies_count = 0
-        for coordinates in enumerate(self.vertices_projection_coords):
+        for coordinates in self.vertices_projection_coords:
             if coordinates[0] > display.screen_width | coordinates[1] > display.screen_height:
                 off_screen_vertecies_count += 1
 
