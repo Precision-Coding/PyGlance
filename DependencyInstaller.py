@@ -1,12 +1,6 @@
 import subprocess
 import sys
 import importlib
-import os
-import platform
-import tarfile
-import zipfile
-import urllib.request
-import shutil
 
 
 def read_requirements(file_path="requirements.txt"):

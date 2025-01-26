@@ -30,9 +30,11 @@ while display.run:
     for event in events:
         if event.type == pg.QUIT:
             display.run = False
+
     key_press = pg.key.get_pressed()
     camera_speed_multiplier = 2
     camera_turn_multiplier = 0.5
+
     if key_press[pg.K_w]:
         camera.position_vector += camera.forward * camera_speed_multiplier
     if key_press[pg.K_a]:
@@ -53,15 +55,15 @@ while display.run:
         camera.pitch = min(max(camera.pitch + 0.1 * camera_turn_multiplier, -np.pi/2), np.pi/2)
     if key_press[pg.K_DOWN]:
         camera.pitch = min(max(camera.pitch - 0.1 * camera_turn_multiplier, -np.pi/2), np.pi/2)
+
+    camera.rotate()
     display.screen.fill("white")
     model.render(camera, display)
     for polygon in model.polygon_array:
         if polygon.is_drawn:
             pg.draw.polygon(display.screen, polygon.colour, polygon.vertices_projection_coords)
-    camera.pitch += 0.0
-    camera.rotate()
 
     if frameCount % 60 == 0:
-        print(round(frameCount/(time.time() - start), 1))
+        print(int(round(frameCount/(time.time() - start), 0)))
     pg.display.flip()
     display.clock.tick(display.fps)

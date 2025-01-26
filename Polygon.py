@@ -23,15 +23,6 @@ class Polygon:
         for i in range(0,3):
             self.vertices_coordinates[i] = np.matmul(rotation_matrix, self.vertices_coordinates[i])
 
-    def project(self, camera, display):
-        for arrayIndex, coordinates in enumerate(self.vertices_coordinates):
-            #finds horizontal and vertical components of vector 'camera' -> 'coordinate'
-            translated_coordinates = coordinates - camera.position_vector
-            transformed_coordinates = np.matmul(translated_coordinates, camera.rotation_matrix)
-            x_coordinate = transformed_coordinates[0]/-transformed_coordinates[2] * 300 + display.screen_width/2
-            y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 300 + display.screen_height/2
-            self.vertices_projection_coords[arrayIndex] = np.array((x_coordinate, y_coordinate))
-
     def shade(self, camera, colour):
         transformed_midpoint = self.middle_coordinate-camera.position_vector
         cos_theta = np.dot(transformed_midpoint, self.normal)/np.linalg.norm(transformed_midpoint) #cos theta = (a.b)/|a||b|
@@ -41,3 +32,17 @@ class Polygon:
             self.is_drawn = True
         else:
             self.is_drawn = False
+
+    def project(self, camera, display):
+        for arrayIndex, coordinates in enumerate(self.vertices_coordinates):
+            #finds horizontal and vertical components of vector 'camera' -> 'coordinate'
+            translated_coordinates = coordinates - camera.position_vector
+            transformed_coordinates = np.matmul(translated_coordinates, camera.rotation_matrix)
+            x_coordinate = transformed_coordinates[0]/-transformed_coordinates[2] * 300 + display.screen_width/2
+            y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 300 + display.screen_height/2
+
+            #Culls drawing polygons if offscreen
+            if x_coordinate > display.screen_width or y_coordinate > display.screen_height:
+                self.is_drawn = False
+
+            self.vertices_projection_coords[arrayIndex] = np.array((x_coordinate, y_coordinate))
