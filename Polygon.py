@@ -46,8 +46,8 @@ class Polygon:
     def cull(self, display):
         off_screen_vertecies_count = 0
         for coordinates in self.vertices_projection_coords:
-            if coordinates[0] > display.screen_width | coordinates[1] > display.screen_height:
+            if coordinates[0] > display.screen_width or coordinates[1] > display.screen_height or coordinates[0] < 0 or coordinates[1] < 0:
                 off_screen_vertecies_count += 1
 
         if off_screen_vertecies_count == 3:
-            self.is_drawn = True
+            self.is_drawn = False
