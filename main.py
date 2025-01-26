@@ -59,6 +59,7 @@ while display.run:
     camera.rotate()
     display.screen.fill("white")
     model.render(camera, display)
+
     for polygon in model.polygon_array:
         if polygon.is_drawn:
             pg.draw.polygon(display.screen, polygon.colour, polygon.vertices_projection_coords)

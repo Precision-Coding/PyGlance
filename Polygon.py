@@ -40,9 +40,14 @@ class Polygon:
             transformed_coordinates = np.matmul(translated_coordinates, camera.rotation_matrix)
             x_coordinate = transformed_coordinates[0]/-transformed_coordinates[2] * 300 + display.screen_width/2
             y_coordinate = transformed_coordinates[1]/-transformed_coordinates[2] * 300 + display.screen_height/2
-
-            #Culls drawing polygons if offscreen
-            if x_coordinate > display.screen_width or y_coordinate > display.screen_height:
-                self.is_drawn = False
-
             self.vertices_projection_coords[arrayIndex] = np.array((x_coordinate, y_coordinate))
+
+        #Culls drawing polygons if offscreen
+    def cull(self, display):
+        off_screen_vertecies_count = 0
+        for arrayIndex, coordinates in enumerate(self.vertices_projection_coords):
+            if coordinates[0] > display.screen_width | coordinates[1] > display.screen_height:
+                off_screen_vertecies_count += 1
+
+        if off_screen_vertecies_count == 3:
+            self.is_drawn = True

@@ -29,6 +29,7 @@ class Model():
             polygon.rotate(self.pitch, self.yaw, self.roll)
             polygon.shade(camera, self.colour)
             polygon.project(camera, display)
+            polygon.cull(display)
 
         #Sorts by distance from camera | draws furthest first
         self.polygon_array = sorted(self.polygon_array, key=lambda polygon: np.linalg.norm(polygon.middle_coordinate-camera.position_vector), reverse=True)
